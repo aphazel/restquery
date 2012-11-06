@@ -33,7 +33,7 @@ class RestQuery {
 
   public function setProxy($host, $port, $user = NULL, $pass = NULL) {
     if(!is_numeric($port))
-      throw new InvalidArgumentException('Port must be numeric!');
+      throw new \InvalidArgumentException('Port must be numeric!');
 
     $this->setCurlOpt(CURLOPT_PROXYTYPE, 'HTTP')
     ->setCurlOpt(CURLOPT_PROXY, $host)
@@ -73,6 +73,9 @@ class RestQuery {
     return $this;
   }
 
+  public function getMethod() {
+    return $this->method;
+  }
   public function setMethod($method) {
     switch($method) {
       case self::METHOD_GET:
@@ -102,7 +105,7 @@ class RestQuery {
       throw new RestQueryException('No URL set!');
     if(empty($this->method))
       throw new RestQueryException('HTTP Method isn\'t set!');
-    
+
     $this->result = curl_exec($this->curl_handle);
     return $this->result;
   }
